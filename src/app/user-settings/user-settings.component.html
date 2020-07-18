@@ -1,0 +1,121 @@
+<div class="container">
+  <h2>User Settings</h2>
+
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        required
+        #nameField="ngModel"
+        (blur)="onBlur(nameField)"
+        name="firstname"
+        [(ngModel)]="userSettings.firstName"
+        type="text"
+        id="firstName"
+        class="form-control"
+        [class.field-error]="form.submitted && nameField.invalid"
+      />
+      <div
+        [hidden]="!form.submitted || nameField.valid"
+        class="alert alert-danger"
+      >
+        Enter a name
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        name="email"
+        [(ngModel)]="userSettings.email"
+        type="email"
+        id="email"
+        class="form-control"
+      />
+    </div>
+    <div class="form-check form-group">
+      <input
+        [(ngModel)]="userSettings.emailOffers"
+        type="checkbox"
+        name="emailOffers"
+        id="emailOffers"
+        class="form-check-input"
+      />
+      <label for="emailOffers" class="form-check-label"
+        >Email Special Offers</label
+      >
+    </div>
+    <p>User Interface Style</p>
+    <div class="form-group">
+      <div class="form-check">
+        <input
+          [(ngModel)]="userSettings.interfaceStyle"
+          class="form-check-input"
+          type="radio"
+          name="interfaceStyle"
+          id="lightInterface"
+          value="light"
+          checked
+        />
+        <label class="form-check-label" for="lightInterface">
+          Light
+        </label>
+      </div>
+
+      <div class="form-check">
+        <input
+          [(ngModel)]="userSettings.interfaceStyle"
+          class="form-check-input"
+          type="radio"
+          name="interfaceStyle"
+          id="mediumInterface"
+          value="medium"
+        />
+        <label class="form-check-label" for="mediumInterface">
+          Medium
+        </label>
+      </div>
+
+      <div class="form-check">
+        <input
+          [(ngModel)]="userSettings.interfaceStyle"
+          class="form-check-input"
+          type="radio"
+          name="interfaceStyle"
+          id="darkInterface"
+          value="dark"
+        />
+        <label class="form-check-label" for="darkInterface">
+          Dark
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="subscription">Subscription Type</label>
+      <select
+        [(ngModel)]="userSettings.subscriptionType"
+        name="subscriptionType"
+        class="form-control"
+        id="subscriptionType"
+      >
+        <option *ngFor="let type of subscriptionTypes | async">
+          {{ type }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Notes</label>
+      <textarea
+        [(ngModel)]="userSettings.notes"
+        name="notes"
+        id="notes"
+        class="form-control"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <button class="btn btn-primary">Send</button>
+  </form>
+  {{ userSettings | json }}
+</div>
